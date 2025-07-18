@@ -1,62 +1,45 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD App</title>
-    <style>
-
-    </style>
+    <title>CRUDE operation</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <form>
-    <label>Name</label>
-    <input type="text" id="name" placeholder="Enter Your Name"><br>
+<body >
+    <div class="container">
+        <div class="form_container">
+            <form class="create_form" id="employee-form">
+                <input type="text"  class="name" name="name" placeholder="Enter  Your Name" required/>
+                <br>
+                <input type="text" class="role" name="role" placeholder="Enter Your Role" required>
+                <br>
+                <label>Status</label>
+                <select class="status" required>
+                    <option value="Active" name="Active">Active</option>
+                    <option value="On Leave" name="On_Leave">On Leave</option>
+                    <option value="Terminated" name="Terminated">Terminated</option>
+                </select><br><br>
+                <button type="button" onclick="addData()"> Add</button>
+                <button type="button" onclick="">Show Trash</button>
+            </form>
 
-    <label>Role</label>
-    <input type="text" id="role" placeholder="Enter Your Role"><br>
+            <table id="outputTable">
+                <thead>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>State</th>
+                    <th>Action</th>
+                    
+                </thead>
+                <tbody class="table_data">
+                    
+                </tbody>
+            </table>
+        </div>
 
-    <label>Status</label>
-    <select>
-        <option>Active</option>
-        <option>On Leave</option>
-        <option>Terminated</option>
-    </select><br>
 
-    
-
-    <button id="btn-add">Add Employee</button>
-
-    </form>
-
-    <table border="2">
-        <thead>
-            <tr><th>Name</th><th>Role</th><th>Status</th><th>control</th></tr>
-        </thead>
-        <tbody id="table-body">
-
-        </tbody>
-    </table>
-
-    <script>
-        document.getElementById("btn-add").addEventListener("click",(event)=>{
-            const newRowEmp = document.createElement("tr")
-
-            const newNameEmp = document.createElement("td")
-            const newRoleEmp = document.createElement("td")
-            const newStatusEmp = document.createElement("td")
-            const newRowCon = document.createElement("td")
-
-            const name = document.getElementById('name').value;
-            const role = document.getElementById('role').value;
-            const status = document.getElementById('status').value;
-
-            document.querySelector("#table-body").appendChild(newRowEmp)
-            document.querySelector("tr").appendChild(newNameEmp)
-            document.querySelector("newRowEmp").appendChild(newRoleEmp)
-
-        })
+    </div>
+    <script src="script.js">
     </script>
-    
 </body>
 </html>
