@@ -9,20 +9,20 @@
     <div class="container">
         <div class="form_container">
             <form class="create_form">
-                <input type="text"  class="name" name="name" placeholder="enter name"/>
+                <input type="text"  class="name" name="name" placeholder="Enter the name" required/>
                 <br>
-                <input type="text" class="role" name="role" placeholder="enter Role">
+                <input type="text" class="role" name="role" placeholder="Enter the Role" required>
                 <br>
                 <label>Status</label>
-        <select class="status" required>
-            <option value="Active" name="Active">Active</option>
-            <option value="On Leave" name="OnLeave">On Leave</option>
-            <option value="Terminated" name="Terminated">Terminated</option>
-        </select><br><br>
-               <div id="btns">
+                <select class="status" required>
+                    <option value="Active" name="Active">Active</option>
+                    <option value="On Leave" name="OnLeave">On Leave</option>
+                    <option value="Terminated" name="Terminated">Terminated</option>
+                </select><br><br>
+                <div id="btns">
                     <button type="button" onclick="addData()"> Add</button>
-                    <button type="button"> Show Trash</button>
-               </div>
+                    <button type="button" onclick="showTrash()"> Show Trash</button>
+                </div>
             </form>
             <table id="outputTable">
                 <thead>
@@ -36,8 +36,21 @@
                     
                 </tbody>
             </table>
+            <div id="trashContainer" style="display:none;">
+                    <h2>Deleted Employees</h2>
+                    <table id="trashTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>State</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="trashData"></tbody>
+                    </table>
+            </div>
         </div>
-
     </div>
     <script src="script.js"></script>
 
