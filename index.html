@@ -1,58 +1,185 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUDE operation</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CRUDE operation</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="container">
         <div class="form_container">
+            <h1>CRUD Employee</h1>
             <form class="create_form">
-                <input type="text"  class="name" name="name" placeholder="Enter the name" required/>
-                <br>
-                <input type="text" class="role" name="role" placeholder="Enter the Role" required>
-                <br>
-                <label>Status</label>
-                <select class="status" required>
-                    <option value="Active" name="Active">Active</option>
-                    <option value="On Leave" name="OnLeave">On Leave</option>
-                    <option value="Terminated" name="Terminated">Terminated</option>
-                </select><br><br>
-                <div id="btns">
-                    <button type="button" onclick="addData()"> Add</button>
-                    <button type="button" onclick="showTrash()"> Show Trash</button>
-                </div>
+            <input
+                type="text"
+                class="name"
+                name="name"
+                placeholder="enter name"
+            />
+            <br />
+            <input
+                type="text"
+                class="role"
+                name="role"
+                placeholder="enter Role"
+            />
+            <br />
+            <input
+                type="number"
+                class="salary"
+                name="salary"
+                placeholder="enter Salary"
+                required
+            />
+            <br />
+            <label>Status</label>
+            <select class="status" required>
+                <option value="Active" name="s">Active</option>
+                <option value="On Leave" name="s">On Leave</option>
+                <option value="Terminated" name="s">Terminated</option></select
+            ><br /><br />
+            <button type="button" onclick="validateAndAddData()">
+                Add Employee
+            </button>
             </form>
-            <table id="outputTable">
-                <thead>
-                    <th>Name</th>
-                    <th>Role</th>
-                    <th>State</th>
-                    <th>Action</th>
-                    
-                </thead>
-                <tbody class="table_data">
-                    
-                </tbody>
-            </table>
-            <div id="trashContainer" style="display:none;">
-                    <h2>Deleted Employees</h2>
-                    <table id="trashTable">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Role</th>
-                                <th>State</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="trashData"></tbody>
-                    </table>
-            </div>
-        </div>
-    </div>
-    <script src="script.js"></script>
 
-<body>
+            <div class="filter_container">
+            <input
+                type="text"
+                id="filterName"
+                placeholder="Filter by Name"
+                oninput="applyFilters()"
+            />
+            <input
+                type="text"
+                id="filterRole"
+                placeholder="Filter by Role"
+                oninput="applyFilters()"
+            />
+            <input
+                type="number"
+                id="minSalary"
+                placeholder="Min Salary"
+                oninput="applyFilters()"
+            />
+            <input
+                type="number"
+                id="maxSalary"
+                placeholder="Max Salary"
+                oninput="applyFilters()"
+            />
+            <input
+                type="number"
+                id="minBonus"
+                placeholder="Min Bonus"
+                oninput="applyFilters()"
+            />
+            <input
+                type="number"
+                id="maxBonus"
+                placeholder="Max Bonus"
+                oninput="applyFilters()"
+            />
+            <select id="filterStatus" onchange="applyFilters()">
+                <option value="">All Status</option>
+                <option value="Active">Active</option>
+                <option value="On Leave">On Leave</option>
+                <option value="Terminated">Terminated</option>
+            </select>
+            </div>
+            <div
+            style="
+                margin: 10px 0;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                flex-wrap: wrap;
+            "
+            >
+            <input
+                type="text"
+                id="searchNameInput"
+                placeholder="Search by Full Name"
+                style="padding: 10px; border-radius: 8px; border: 1px solid gray"
+            />
+            <button onclick="searchEmployeeByName()">
+                <img
+                src="https://cdn-icons-png.flaticon.com/512/622/622669.png"
+                width="18"
+                height="18"
+                alt="Search Icon"
+                />
+                Search
+            </button>
+            <button onclick="clearSearch()" style="background-color: #d9534f">
+                Clear
+            </button>
+            </div>
+
+            <table id="outputTable">
+            <thead>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Salary</th>
+                <th>State</th>
+                <th>Action</th>
+            </thead>
+            <tbody class="table_data"></tbody>
+            </table>
+            <h3 id="totalPayroll">Total Payroll: 0 R</h3>
+            <button onclick="deleteLowSalaryEmployees(20000)">
+            Delete Salaries ≤ 20,000 R
+            </button>
+            <button type="button" id="btnTrash" onclick="trash()">
+            Open Trash
+            </button>
+            <table id="trashTable" style="display: none">
+            <thead>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Salary</th>
+                <th>State</th>
+                <th>Action</th>
+            </thead>
+            <tbody class="table_trash"></tbody>
+            </table>
+        </div>
+        </div>
+        <div
+        id="bonusModal"
+        style="
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        "
+        >
+        <div
+            style="
+            background: white;
+            margin: 15% auto;
+            padding: 20px;
+            width: 300px;
+            position: relative;
+            "
+        >
+            <span
+            onclick="closeBonusModal()"
+            style="cursor: pointer; position: absolute; top: 10px; right: 10px"
+            >&times;</span
+            >
+            <h2>Enter Bonus Percentage</h2>
+            <input
+            type="number"
+            id="bonusPercentage"
+            placeholder="Enter percentage"
+            />
+            <button onclick="calculateBonus()">Submit</button>
+        </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
 </html>
