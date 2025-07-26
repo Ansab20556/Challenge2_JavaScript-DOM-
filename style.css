@@ -42,21 +42,19 @@ button {
 }
 
 button:hover {
-    
-        background-color:  rgb(234, 156, 204);
-        color: #870997;
+    background-color:  rgb(234, 156, 204);
+    color: #870997;
         }
 table{
     width:100%;
     margin-top: 20px;
 }
- th,
-        td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
- th {
-            background-color:  #870997;
-            color: #fff;
-        }
+th,td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    }
+th {
+    background-color:  #870997;
+    color: #fff;
+    }
